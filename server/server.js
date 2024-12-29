@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/api',require('./router/userRouter'));
-
+app.use('/api',require('./router/boardRoute'));
 connectDb();
 
 app.listen(port,()=>{
