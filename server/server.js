@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api',require('./router/userRouter'));
 app.use('/api',require('./router/boardRoute'));
+app.use('/api',require('./router/taskRouter'));
 connectDb();
 
 app.listen(port,()=>{

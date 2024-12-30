@@ -6,10 +6,8 @@ const taskSchema = mongoose.Schema({
     board: { type: mongoose.Schema.Types.ObjectId, ref: 'Board', required: true },
     assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Employee assigned to the task
     status: { type: String, enum: ['Backlog', 'In Progress', 'Completed'], default: 'Backlog' },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true } // Manager
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
+    isDeleted:{type:Boolean,default:false}
 }, { timestamps: true });
 
 module.exports = mongoose.model('Task', taskSchema);
-
-
-module.exports = mongoose.model('Todo', todoSchema);
