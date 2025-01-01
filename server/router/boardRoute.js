@@ -1,8 +1,10 @@
 const express = require('express');
-const {createBoard, dismissBoard, updateBoard} = require('../controller/boardController')
-const route = express.Router();
+const { createBoard, dismissBoard, updateBoard } = require('../controller/boardController');
+const authMiddleware = require('../middleware/authMiddleware');
+const router = express.Router();
 
-route.post('/create-board',createBoard);
-route.put('/dismissed-board',dismissBoard);
-route.put('/update-board',updateBoard);
-module.exports = route;
+router.post('/create-board', authMiddleware, createBoard);
+router.put('/dismissed-board', authMiddleware, dismissBoard);
+router.put('/update-board', authMiddleware, updateBoard);
+
+module.exports = router;

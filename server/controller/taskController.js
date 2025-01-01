@@ -73,11 +73,11 @@ exports.getTasks = async (req,res)=>
         const {taskId} = req.params;
         if(!taskId)
         {
-            const tasks = await tasks.find();
-            return res.status(200).json({status:'Success',message:'Tasks fetch successfully',tasks});
+            const task = await tasks.find({ isDeleted: false });
+            return res.status(200).json({status:'Success',message:'Tasks fetch successfully',task});
         }
         else{
-            const task = await tasks.findById(taskId);
+            const task = await tasks.findById({ _id: taskId, isDeleted: false });
             if(!task)
             {
                 return res.status(200).json({status:'Success',message:'Task Not Found with the provided id',task:[]});
@@ -86,6 +86,7 @@ exports.getTasks = async (req,res)=>
         }
     }catch(err)
     {
+        console.error(err)
         return res.status(500).json({status:'Failure',message:'Internal Server error'});
     }
 }

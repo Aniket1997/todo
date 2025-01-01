@@ -18,30 +18,25 @@ const userSchema = new mongoose.Schema({
         enum: ['Male', 'Female', 'Other'],
         required: true,
     },
+    role:{
+        type:String,
+        enum:['Admin','Super-Admin','User'],
+        default:'User'
+    },
     phoneNumber: {
         type: String,
-        minlength: 10,
-        maxlength: 10,
+        required: true,
+        unique: true,
+        minlength:10,
+        maxlength:10,
     },
-    role: {
+    password: {
         type: String,
-        enum: ['Admin', 'Employee','Guest'],
-        default: 'Employee',
-    },
-    profilePicture: {
-        type: String,
-        default: '',
-    },
-    status: {
-        type: String,
-        enum: ['Active', 'Inactive', 'Suspended'],
-        default: 'Active',
-    },
-    lastLogin: {
-        type: Date,
-    },
-}, {
-    timestamps: true, // Adds createdAt and updatedAt fields
+        required: true,
+        minlength: 6,
+    }
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
