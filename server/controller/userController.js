@@ -1,6 +1,7 @@
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
+
 exports.signup = async (req, res) => {
     try {
         const {
@@ -69,3 +70,23 @@ exports.login = async (req, res) => {
         return res.status(500).json({ status: 'Failure', message: 'Internal Server Error' });
     }
 };
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        // Assuming `req.user` contains the authenticated user's data
+        const { role } = req.user;
+        console.log(req);
+        // Check if the user is Admin or Super-Admin
+        if (role !== 'Admin' && role !== 'Super-Admin') {
+            return res.status(403).json({ message: 'Access denied. You are not authorized to view all users.' });
+        }
+
+        // Fetch all users
+        const users = await User.find().select('-password'); // Exclude passwords from the response
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred while retrieving users.', error: error.message });
+    }
+};
+
+
